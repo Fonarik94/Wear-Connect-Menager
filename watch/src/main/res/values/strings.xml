@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Connect Manager</string>
+    <string name="brightnessSwitch">Brightness</string>
+    <string name="ChargingSwitch">Charging</string>
+    <string name="Doze">Doze</string>
+    <string name="defButton">Def</string>
+
+
+</resources>
