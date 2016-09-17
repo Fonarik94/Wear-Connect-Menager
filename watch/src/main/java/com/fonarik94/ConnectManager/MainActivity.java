@@ -9,8 +9,10 @@ import android.os.PowerManager;
 import android.os.Vibrator;
 import android.support.wearable.activity.WearableActivity;
 import android.support.wearable.view.BoxInsetLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class MainActivity extends WearableActivity {
@@ -52,37 +54,6 @@ public class MainActivity extends WearableActivity {
         startMonitoringService();
         buttonsStateSetter(); //set "checked" fof toggle buttons from settings file
 
-
-        dozeTButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    vibrate.vibrate(600);
-                    dozeTButton.setBackgroundColor(getColor(R.color.md_purple_700));
-                    settingsManager.setUserDozeDisablingOn(true);
-                } else {
-                    vibrate.vibrate(600);
-                    dozeTButton.setBackgroundColor(getColor(R.color.md_purple_A700));
-                    settingsManager.setUserDozeDisablingOn(false);
-                }
-            }
-        });
-
-/*        chargingTButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    vibrate.vibrate(600);
-                    chargingTButton.setBackgroundColor(getColor(R.color.circular_button_pressed));
-                    settingsManager.setUserChargingDisablingOn(true);
-                } else {
-                    vibrate.vibrate(600);
-                    chargingTButton.setBackgroundColor(getColor(R.color.circular_button));
-                    settingsManager.setUserChargingDisablingOn(false);
-                }
-            }
-        });
-    */
     }
 
 
@@ -94,37 +65,48 @@ public class MainActivity extends WearableActivity {
     private void startMonitoringService() {
         if (settingsManager.getDozeDisablingOn()) {
             startService(new Intent(this, MonitoringService.class));
-
         }
     }
 
     public void setUserDefault(View view) {
-        String wf;
-        String bt;
         settingsManager.setUserBluetoothState(connectivityManager.isBluetoothEnabled());
         settingsManager.setUserWifiState(connectivityManager.isWifiEnabled());
         Vibrate v = new Vibrate(MainActivity.this.getApplicationContext());
         v.vibrate(5, 60, 20, 50);
-/*        bt = connectivityManager.isBluetoothEnabled() ? "on" : "off";
-        wf = connectivityManager.isWifiEnabled() ? "on" : "off";
-        Toast.makeText(MainActivity.this, "Set user" + "\nbt: " + bt + "\nwifi: " + wf, Toast.LENGTH_SHORT).show();*/
+        String bt = connectivityManager.isBluetoothEnabled() ? "on" : "off";
+        String wf = connectivityManager.isWifiEnabled() ? "on" : "off";
+        Toast.makeText(MainActivity.this, "Set user" + "\nbt: " + bt + "\nwifi: " + wf, Toast.LENGTH_SHORT).show();
     }
 
     public void chargingOnCheckedChanged(View view) {
-        if (!bm.isCharging()) {
-            connectivityManager.backToDefaultState();
 
-        }
         if (chargingTButton.isChecked()) {
             vibrate.vibrate(600);
             chargingTButton.setBackgroundColor(getColor(R.color.circular_button_pressed));
             settingsManager.setUserChargingDisablingOn(true);
+            if (bm.isCharging()){
+                connectivityManager.bluetoothDisable();
+                connectivityManager.wifiDisable();
+            }
         } else {
             vibrate.vibrate(600);
             chargingTButton.setBackgroundColor(getColor(R.color.circular_button));
+            connectivityManager.backToDefaultState();
             settingsManager.setUserChargingDisablingOn(false);
         }
 
+    }
+
+    public void dozeOnCheckedChanged(View view){
+        if (dozeTButton.isChecked()) {
+            vibrate.vibrate(600);
+            dozeTButton.setBackgroundColor(getColor(R.color.md_purple_700));
+            settingsManager.setUserDozeDisablingOn(true);
+        } else {
+            vibrate.vibrate(600);
+            dozeTButton.setBackgroundColor(getColor(R.color.md_purple_A700));
+            settingsManager.setUserDozeDisablingOn(false);
+        }
     }
 
 
