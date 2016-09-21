@@ -4,6 +4,11 @@
     <string name="ChargingSwitch">Charging</string>
     <string name="Doze">Doze</string>
     <string name="defButton">Def</string>
+    <string name="charging_default">Charging default</string>
+    <string name="charging_auto">Charging auto</string>
+    <string name="doze_default">Doze default</string>
+    <string name="doze_auto">Doze auto</string>
+    <string name="defbuttonimage">defButtonImage</string>
 
 
 </resources>

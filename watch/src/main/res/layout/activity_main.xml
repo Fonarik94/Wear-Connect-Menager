@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.wearable.view.BoxInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
@@ -10,125 +11,78 @@
     tools:context="com.fonarik94.ConnectManager.MainActivity"
     tools:deviceIds="wear">
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:layout_width="66dp"
-            android:layout_height="66dp"
+
+        <ToggleButton
+            android:id="@+id/chargingButton"
+            android:background="@color/blue"
+            android:clickable="true"
+            android:colorBackground="@color/dialog_background"
+            android:onClick="chargingOnCheckedChanged"
+            android:enabled="true"
+            android:text="@string/ChargingSwitch"
+            android:textOff="@string/charging_default"
+            android:textOn="@string/charging_auto"
+
+            android:layout_width="0dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:layout_height="88dp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ToggleButton
+            android:id="@+id/dozeTButton"
+            android:background="@color/md_purple_A700"
+            android:clickable="true"
+            android:colorBackground="@color/dialog_background"
+            android:enabled="true"
+            android:onClick="dozeOnCheckedChanged"
+            android:focusableInTouchMode="false"
+            android:minHeight="60dp"
+            android:text="@string/Doze"
+            android:textOff="@string/doze_default"
+            android:textOn="@string/doze_auto"
+
+
+            android:checked="false"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            android:layout_height="88dp"
+            android:layout_width="0dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <ImageButton
             android:id="@+id/defButton"
             android:text="@string/defButton"
             android:textColor="#FFFFFF"
             android:onClick="setUserDefault"
             android:background="@drawable/buttonshape"
-            android:layout_alignWithParentIfMissing="false"
-            android:layout_gravity="center"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
             android:enabled="true"
-            android:clickable="true" />
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ToggleButton
-                android:id="@+id/chargingButton"
-                android:layout_width="match_parent"
-                android:background="@color/blue"
-                android:clickable="true"
-                android:colorBackground="@color/dialog_background"
-                android:onClick="chargingOnCheckedChanged"
-                android:enabled="true"
-                android:fadingEdge="horizontal"
-                android:minHeight="60dp"
-                android:text="@string/ChargingSwitch"
-                android:textOff="Charging default"
-                android:textOn="Charging auto"
-                android:layout_height="wrap_content"
-
-                android:layout_weight="1" />
-
-            <ToggleButton
-                android:id="@+id/dozeTButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/md_purple_A700"
-                android:clickable="true"
-                android:colorBackground="@color/dialog_background"
-                android:enabled="true"
-                android:onClick="dozeOnCheckedChanged"
-                android:fadingEdge="horizontal"
-                android:focusableInTouchMode="false"
-                android:minHeight="60dp"
-                android:text="@string/Doze"
-                android:textOff="Doze default"
-                android:textOn="Doze auto"
-
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
-    </RelativeLayout>
-
-
-<!--    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:weightSum="2"
-        android:measureWithLargestChild="false">
-
-
-        <ToggleButton
-            android:id="@+id/chargingButton"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/blue"
             android:clickable="true"
-            android:colorBackground="@color/dialog_background"
-
-            android:enabled="true"
-            android:fadingEdge="horizontal"
-            android:minHeight="60dp"
-            android:text="@string/ChargingSwitch"
-            android:textOff="Charging default"
-            android:textOn="Charging auto"
-            android:layout_weight="0.67" />
+            android:elevation="14dp"
+            android:radius="90dp"
+            android:src="@drawable/ic_check_white_24dp"
+            android:scaleType="centerInside"
 
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:text="New Button"
-            android:id="@+id/button"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="0.67"
-
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"/>
-
-        <ToggleButton
-            android:id="@+id/dozeTButton"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/md_purple_A700"
-            android:clickable="true"
-            android:colorBackground="@color/dialog_background"
-            android:enabled="true"
-            android:fadingEdge="horizontal"
-            android:focusableInTouchMode="false"
-            android:minHeight="60dp"
-            android:text="@string/Doze"
-            android:textOff="Doze default"
-            android:textOn="Doze auto"
-            android:layout_weight="0.67" />
+            app:layout_constraintBottom_toBottomOf="@+id/dozeTButton"
+            app:layout_constraintTop_toTopOf="@+id/chargingButton"
+            app:layout_constraintRight_toRightOf="@+id/chargingButton"
+            app:layout_constraintLeft_toLeftOf="@+id/chargingButton"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:contentDescription="@string/defbuttonimage"
+            android:cropToPadding="true"
+             />
 
 
-    </LinearLayout>-->
+    </android.support.constraint.ConstraintLayout>
+
 
 
 </android.support.wearable.view.BoxInsetLayout>
