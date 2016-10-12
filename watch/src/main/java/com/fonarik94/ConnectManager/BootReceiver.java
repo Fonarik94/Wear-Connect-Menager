@@ -11,7 +11,6 @@ public class BootReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (new SettingsManager(context).getDozeDisablingOn()) {
             context.startService(new Intent(context, MonitoringService.class));
-            Toast.makeText(context, "Boot completed", Toast.LENGTH_SHORT).show();
             Log.d(MainActivity.TAG, "Boot completed");
         }
     }

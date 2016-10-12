@@ -38,7 +38,7 @@ public class PowerConnectionReceiver extends BroadcastReceiver {
     private void radioDisable() {
         mConnectivityManager.wifiDisable();
         bt = mConnectivityManager.bluetoothDisable() ? "off" : "on";
-        wf = mConnectivityManager.isWifiEnabled() ? "on" : "off";
+        wf = mConnectivityManager.wifiDisable() ? "on" : "off";
     }
 //returning radio modules to user default state
     private void radioDefault() {
@@ -46,10 +46,9 @@ public class PowerConnectionReceiver extends BroadcastReceiver {
             mConnectivityManager.backToDefaultState();
         } catch (RuntimeException e) {
                         /*NOP*/
-            Log.e("PROJECTALPHA", "radioDefault: " + e.getMessage());
+            Log.e(MainActivity.TAG, "radioDefault: " + e.getMessage());
         }
-        bt = mConnectivityManager.bluetoothEnable() ? "en" : "dis";
-        wf = mConnectivityManager.isWifiEnabled() ? "en" : "dis";
+
     }
 
 }

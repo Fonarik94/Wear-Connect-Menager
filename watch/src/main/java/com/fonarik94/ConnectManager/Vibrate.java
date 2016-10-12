@@ -19,7 +19,6 @@ public class Vibrate {
             pattern[i]=v;
             i++;
         }
-        Log.d(MainActivity.TAG, Arrays.toString(pattern));
         vibro.vibrate(pattern, -1);
 
     }

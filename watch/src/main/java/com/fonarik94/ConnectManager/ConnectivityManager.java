@@ -3,26 +3,16 @@ package com.fonarik94.ConnectManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.net.wifi.WifiManager;
+import android.widget.Toast;
 
 public class ConnectivityManager {
 
     private WifiManager mWifiManager;
     private Context mContext;
 
-    //Turn on wifi module
-    public boolean wifiEnable() {
-        boolean wifiSucsessed = false;
-        if (!mWifiManager.isWifiEnabled()) {
-            wifiSucsessed = mWifiManager.setWifiEnabled(true);
-        }
-        return wifiSucsessed;
-    }
-
     //Turn off wifi module
-    public void wifiDisable() {
-        if (mWifiManager.isWifiEnabled()) {
-            mWifiManager.setWifiEnabled(false);
-        }
+    public boolean wifiDisable() {
+        return mWifiManager.isWifiEnabled()&&mWifiManager.setWifiEnabled(false);
     }
 
     //Enables bluetooth module
@@ -34,7 +24,6 @@ public class ConnectivityManager {
             }
             return bt;
         } else {
-//            throw new RuntimeException("Device has not bluetooth adapter");
             return false;
         }
     }
@@ -46,12 +35,17 @@ public class ConnectivityManager {
 
     //Return bluetooth and wifi state to default state
     public void backToDefaultState() {
+        boolean btRes = false;
+        boolean wifiRes = false;
         if (BluetoothAdapter.getDefaultAdapter() != null && BluetoothAdapter.getDefaultAdapter().isEnabled() != new SettingsManager(mContext).getUserBluetoothState()) {
-            BluetoothAdapter.getDefaultAdapter().enable();
+            btRes = BluetoothAdapter.getDefaultAdapter().enable();
         }
         if (mWifiManager.isWifiEnabled() != new SettingsManager(mContext).getUserWifiState()) {
-            mWifiManager.setWifiEnabled(new SettingsManager(mContext).getUserWifiState());
+            wifiRes = mWifiManager.setWifiEnabled(new SettingsManager(mContext).getUserWifiState());
         }
+        String bt = String.valueOf(btRes);
+        String wifi = String.valueOf(wifiRes);
+        Toast.makeText(mContext, "bt: " + bt + "\nwifi: " + wifi, Toast.LENGTH_SHORT).show();
     }
 
     //Returns true - wifi enabled and false - if wifi disabled

@@ -2,16 +2,12 @@ package com.fonarik94.ConnectManager;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
+import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.os.Bundle;
-import android.os.PowerManager;
-import android.os.Vibrator;
 import android.support.wearable.activity.WearableActivity;
 import android.support.wearable.view.BoxInsetLayout;
-import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -29,7 +25,7 @@ public class MainActivity extends WearableActivity {
     public static ConnectivityManager connectivityManager;
     public BatteryManager bm;
     private static Vibrate vibrate;
-
+    private WifiManager wifiManager;
     public static final String TAG = "ProjectAlpha";
 
     public static SettingsManager settingsManager;
@@ -49,7 +45,11 @@ public class MainActivity extends WearableActivity {
 
         vibrate = new Vibrate(MainActivity.this);
         settingsManager = new SettingsManager(this);
+        wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
 
+/*        for(Method method: wifiManager.getClass().getDeclaredMethods()){
+            Log.d("WIFI_Reflection","name: "+method.getName()+" acces: "+method.getModifiers() );
+        }*/
 
         startMonitoringService();
         buttonsStateSetter(); //set "checked" fof toggle buttons from settings file
@@ -69,13 +69,26 @@ public class MainActivity extends WearableActivity {
     }
 
     public void setUserDefault(View view) {
-        settingsManager.setUserBluetoothState(connectivityManager.isBluetoothEnabled());
+/*        settingsManager.setUserBluetoothState(connectivityManager.isBluetoothEnabled());
         settingsManager.setUserWifiState(connectivityManager.isWifiEnabled());
         Vibrate v = new Vibrate(MainActivity.this.getApplicationContext());
         v.vibrate(5, 60, 20, 50);
         String bt = connectivityManager.isBluetoothEnabled() ? "on" : "off";
         String wf = connectivityManager.isWifiEnabled() ? "on" : "off";
-        Toast.makeText(MainActivity.this, "Set user" + "\nbt: " + bt + "\nwifi: " + wf, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "Set user" + "\nbt: " + bt + "\nwifi: " + wf, Toast.LENGTH_SHORT).show();*/
+/*        WifiManager wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
+        Toast.makeText(this, String.valueOf(wifiManager.getWifiState()), Toast.LENGTH_SHORT).show();*/
+
+
+        /*Class c = wifiManager.getClass();
+        Class[] paramTypes = new Class[0] ;
+        Method method = c.getMethod("getEnableAutoJoinWhenAssociated", paramTypes);
+        Object[] args = new Object[0];
+        boolean wtf = false;
+                wtf = (boolean) method.invoke(wifiManager, args);
+        */
+        boolean wifi = wifiManager.isWifiEnabled()?wifiManager.setWifiEnabled(false):wifiManager.setWifiEnabled(true);
+        Toast.makeText(this, "wifi:" + String.valueOf(wifi) , Toast.LENGTH_LONG).show();
     }
 
     public void chargingOnCheckedChanged(View view) {
