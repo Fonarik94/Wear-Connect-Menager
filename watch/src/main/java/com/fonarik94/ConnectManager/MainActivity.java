@@ -156,9 +156,7 @@ public class MainActivity extends WearableActivity {
         if (isAmbient()) {
 //            mContainerView.setBackgroundColor(getColor(android.R.color.black));
             mContainerView.setBackground(null);
-
             this.finish();
-
 
         } else {
             mContainerView.setBackground(null);

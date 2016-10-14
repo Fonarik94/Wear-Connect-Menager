@@ -45,7 +45,7 @@ public class ConnectivityManager {
         }
         String bt = String.valueOf(btRes);
         String wifi = String.valueOf(wifiRes);
-        Toast.makeText(mContext, "bt: " + bt + "\nwifi: " + wifi, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mContext, "bt: " + bt + "\nwifi: " + wifi, Toast.LENGTH_SHORT).show();
     }
 
     //Returns true - wifi enabled and false - if wifi disabled

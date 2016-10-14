@@ -3,12 +3,14 @@ package com.fonarik94.ConnectManager;
 import android.app.Service;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
 
 public class MonitoringService extends Service {
     private DozeListener dozeListener = new DozeListener();
+    private ConnectivityReceiver connectivityReceiver = new ConnectivityReceiver();
 
     @Override
     public void onCreate() {
@@ -39,9 +41,11 @@ public class MonitoringService extends Service {
     private void registerReceiver() {
         this.registerReceiver(dozeListener, new IntentFilter(PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED));
         this.registerReceiver(dozeListener, new IntentFilter(PowerManager.ACTION_POWER_SAVE_MODE_CHANGED));
+//        this.registerReceiver(connectivityReceiver, new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION));
     }
 
     private void unRegisterReceiver() {
         this.unregisterReceiver(dozeListener);
+//        this.unregisterReceiver(connectivityReceiver);
     }
 }
